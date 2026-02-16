@@ -19,18 +19,17 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// MongoDB Connection (with caching for serverless)
+// MongoDB Connection cache
 let mongoConnected = false;
 
 const connectDB = async () => {
   if (mongoConnected && mongoose.connection.readyState === 1) {
-    console.log('MongoDB already connected');
     return;
   }
 
   try {
     if (!process.env.MONGO_URI) {
-      throw new Error('MONGO_URI environment variable not set');
+      throw new Error('MONGO_URI not configured');
     }
     
     await mongoose.connect(process.env.MONGO_URI, {
@@ -39,60 +38,68 @@ const connectDB = async () => {
     });
     
     mongoConnected = true;
-    console.log('✓ MongoDB connected successfully');
   } catch (err) {
-    console.error('✗ MongoDB connection error:', err.message);
+    console.error('MongoDB error:', err.message);
     mongoConnected = false;
     throw err;
   }
 };
 
-// Health check
+// Health check endpoint
 app.get('/api/health', (req, res) => {
-  res.json({ ok: true, message: 'Backend is running' });
+  res.json({ ok: true });
 });
 
-// Root endpoint
-app.get('/', (req, res) => {
-  res.json({ message: 'Shri Ganesh Electricals API is running' });
-});
-
-// Database connection middleware (runs before API routes)
-app.use(async (req, res, next) => {
-  // Skip DB connection for health check and root
-  if (req.path === '/' || req.path === '/api/health') {
-    return next();
-  }
-  
+// API Routes (connect DB before these)
+app.use('/api/auth', async (req, res, next) => {
   try {
     await connectDB();
     next();
   } catch (err) {
-    console.error('Failed to connect to MongoDB:', err.message);
-    return res.status(503).json({
-      error: 'Database connection failed',
-      message: 'Backend service is temporarily unavailable'
-    });
+    res.status(503).json({ error: 'Database unavailable' });
   }
 });
 
-// Routes
-app.use('/api/products', productRoutes);
-app.use('/api/bills', billRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/reset', resetRoutes);
-
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({ error: 'Endpoint not found', path: req.path });
+app.use('/api/products', async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    res.status(503).json({ error: 'Database unavailable' });
+  }
 });
 
-// Error handler
-app.use((err, req, res, next) => {
-  console.error('Error:', err.message);
-  res.status(err.status || 500).json({
-    error: err.message || 'Internal server error'
-  });
+app.use('/api/bills', async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    res.status(503).json({ error: 'Database unavailable' });
+  }
+});
+
+app.use('/api/reset', async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    res.status(503).json({ error: 'Database unavailable' });
+  }
+});
+
+// Mount routes
+app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/bills', billRoutes);
+app.use('/api/reset', resetRoutes);
+
+// Catch all
+app.get('/', (req, res) => {
+  res.json({ message: 'API is working' });
+});
+
+app.all('*', (req, res) => {
+  res.status(404).json({ error: 'Not found', path: req.path });
 });
 
 export default app;
