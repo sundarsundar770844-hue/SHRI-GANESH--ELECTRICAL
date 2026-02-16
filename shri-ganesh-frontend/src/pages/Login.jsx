@@ -11,12 +11,10 @@ export default function Login({ onLogin }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState(location.state?.email || '');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [googlePending, setGooglePending] = useState(null); // { access_token, email, name, picture, isDemo }
 
 
   const googleLogin = useGoogleLogin({
@@ -89,7 +87,7 @@ export default function Login({ onLogin }) {
     }
     setLoading(true);
     try {
-      const res = await (await import('../api')).default.post('/auth/login', { username, email, password });
+      const res = await (await import('../api')).default.post('/auth/login', { username, password });
       onLogin(res.data, res.data.token);
       navigate('/');
     } catch (err) {
@@ -108,10 +106,6 @@ export default function Login({ onLogin }) {
             <div>
               <label className="text-sm text-slate-600 block mb-1">Username</label>
               <input type="text" value={username} onChange={e => setUsername(e.target.value)} required className="w-full p-3 rounded-lg border" placeholder="your username" />
-            </div>
-            <div>
-              <label className="text-sm text-slate-600 block mb-1">Email</label>
-              <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="w-full p-3 rounded-lg border" placeholder="your@email.com" />
             </div>
             <div className="relative">
               <label className="text-sm text-slate-600 block mb-1">Password</label>
@@ -134,30 +128,6 @@ export default function Login({ onLogin }) {
           </form>
         </div>
       </div>
-
-      {googlePending && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/40" onClick={cancelGooglePending} />
-          <div role="dialog" aria-modal="true" className="relative bg-white p-6 rounded-xl shadow-lg w-full max-w-sm z-50">
-            <div className="flex items-center gap-3 mb-4">
-              {googlePending.picture ? (
-                <img src={googlePending.picture} alt="profile" className="w-12 h-12 rounded-full" />
-              ) : (
-                <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">G</div>
-              )}
-              <div>
-                <div className="font-semibold">{googlePending.name || googlePending.email}</div>
-                <div className="text-xs text-slate-500">{googlePending.email}</div>
-              </div>
-            </div>
-            <p className="text-sm text-slate-600 mb-4">Continue signing in with this Google account?</p>
-            <div className="flex justify-end gap-2">
-              <button onClick={cancelGooglePending} className="px-4 py-2 rounded bg-slate-200">Cancel</button>
-              <button onClick={confirmGoogleLogin} disabled={loading} className="px-4 py-2 rounded bg-[#0D47A1] text-white">{loading ? 'Signing in...' : 'Continue'}</button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
