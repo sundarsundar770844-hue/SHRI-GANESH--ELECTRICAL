@@ -6,10 +6,10 @@ Mobile-first Electrical Shop Management Web App.
 
 ## Quick Deployment Links
 
-- 📱 **Frontend Live:** https://netlify-site-url (Netlify - Coming Soon)
-- 🔌 **Backend API:** https://vercel-api-url (Vercel - Follow steps below)
-- 📖 **Frontend Setup:** [NETLIFY_SETUP.md](NETLIFY_SETUP.md)
-- 🖥️ **Backend Setup:** [BACKEND_DEPLOYMENT.md](BACKEND_DEPLOYMENT.md)
+- 🌐 **Frontend Live:** https://vercel-frontend-url (Deploy to Vercel)
+- 🔌 **Backend API:** https://vercel-backend-url (Deploy to Vercel)
+- 📖 **Full Deployment Guide:** [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md)
+- 📚 **Alternative Netlify Guide:** [NETLIFY_SETUP.md](NETLIFY_SETUP.md) (Frontend only)
 
 ## Tech Stack
 

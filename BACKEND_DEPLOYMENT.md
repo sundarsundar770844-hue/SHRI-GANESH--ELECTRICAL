@@ -1,5 +1,7 @@
 # Backend Deployment to Vercel — Complete Guide
 
+**GitHub Repository:** https://github.com/sundarsundar770844-hue/SHRI-GANESH--ELECTRICAL
+
 ## Overview
 Your backend has been restructured for Vercel's serverless environment. Instead of running `app.listen()`, it exports an Express app as a handler.
 
@@ -29,9 +31,11 @@ Follow the prompts:
 
 ### Option B: Deploy via GitHub (Recommended)
 
-1. Your backend code is already on GitHub in the same repository
+1. Your backend code is already on GitHub:
+   **https://github.com/sundarsundar770844-hue/SHRI-GANESH--ELECTRICAL**
 2. Go to https://vercel.com/new
-3. Import your GitHub repository: `ssanjay31431-commits/SHRI-GANESH--ELECTRICAL`
+3. Click "Import from Git" and select GitHub
+4. Select your repository: `sundarsundar770844-hue/SHRI-GANESH--ELECTRICAL`
 4. Set:
    - **Root Directory**: `backend`
    - **Build Command**: `npm install` (leave as is)
@@ -140,3 +144,7 @@ backend/
 - ✅ MongoDB connections are cached for performance
 
 Your app is now ready for full deployment!
+
+---
+
+**GitHub Repository:** https://github.com/sundarsundar770844-hue/SHRI-GANESH--ELECTRICAL

@@ -1,5 +1,7 @@
 # Netlify Deployment — Complete Setup Guide
 
+**GitHub Repository:** https://github.com/sundarsundar770844-hue/SHRI-GANESH--ELECTRICAL
+
 ## Step 1: Push Repository to GitHub ✓
 Your code is already on GitHub at: https://github.com/ssanjay31431-commits/electrical.git
 
@@ -7,7 +9,7 @@ Your code is already on GitHub at: https://github.com/ssanjay31431-commits/elect
 1. Go to https://netlify.com and log in.
 2. Click "New site from Git".
 3. Select GitHub and authorize.
-4. Choose your repository: `ssanjay31431-commits/electrical`.
+4. Choose your repository: `sundarsundar770844-hue/SHRI-GANESH--ELECTRICAL`.
 5. Configure build settings:
    - **Base directory**: `shri-ganesh-frontend`
    - **Build command**: `npm ci && npm run build`
@@ -64,3 +66,7 @@ If you deployed the backend to Vercel:
 - Login works on mobile and desktop.
 - Frontend is deployed on Netlify.
 - Backend can be on Vercel, Heroku, or any cloud service.
+
+---
+
+**GitHub Repository:** https://github.com/sundarsundar770844-hue/SHRI-GANESH--ELECTRICAL
