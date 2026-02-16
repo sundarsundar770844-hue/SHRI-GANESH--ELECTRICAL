@@ -8,7 +8,9 @@ Mobile-first Electrical Shop Management Web App.
 
 ## Quick Deployment
 
-**Deploy to Vercel:** [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md)
+**🚀 DEPLOY IN 5 MINUTES:** [QUICK_START.md](QUICK_START.md)
+
+**📖 Detailed Guide:** [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md)
 
 ## Tech Stack
 
