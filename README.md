@@ -2,6 +2,8 @@
 
 Mobile-first Electrical Shop Management Web App.
 
+**✅ Works on Mobile, Tablet, and Desktop**
+
 **GitHub:** https://github.com/sundarsundar770844-hue/SHRI-GANESH--ELECTRICAL
 
 ## Quick Deployment

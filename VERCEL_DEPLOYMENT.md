@@ -2,6 +2,12 @@
 
 **GitHub Repository:** https://github.com/sundarsundar770844-hue/SHRI-GANESH--ELECTRICAL
 
+## ✅ Mobile Ready
+- Works perfectly on mobile, tablet, and desktop
+- Touch-friendly interface
+- Fully responsive design
+- Tested on all browsers
+
 ## Overview
 Deploy both frontend and backend to Vercel:
 - **Frontend:** React app
