@@ -4,10 +4,10 @@ dotenv.config();
 import mongoose from 'mongoose';
 import express from 'express';
 import cors from 'cors';
-import productRoutes from './routes/productRoutes.js';
-import billRoutes from './routes/billRoutes.js';
-import authRoutes from './routes/authRoutes.js';
-import resetRoutes from './routes/resetRoutes.js';
+import productRoutes from '../routes/productRoutes.js';
+import billRoutes from '../routes/billRoutes.js';
+import authRoutes from '../routes/authRoutes.js';
+import resetRoutes from '../routes/resetRoutes.js';
 
 const app = express();
 
