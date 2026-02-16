@@ -99,19 +99,6 @@ export default function Login({ onLogin }) {
       <div className="w-full max-w-sm">
         <h1 className="text-2xl font-bold text-[#0D47A1] text-center mb-2">Shri Ganesh Electricals</h1>
         <div className="bg-white p-6 rounded-xl shadow space-y-4">
-          {/* Show environment variable warning */}
-          {(!import.meta.env.VITE_API_URL || !hasGoogleId) && (
-            <div className="text-rose-600 text-sm mb-2">
-              Login is not available. Please contact admin: missing API or Google Client ID.<br />
-              (Check Netlify environment variables in Site Settings.)
-            </div>
-          )}
-          {/* Show mobile device warning */}
-          {typeof window !== 'undefined' && window.innerWidth < 600 && (
-            <div className="text-amber-600 text-sm mb-2">
-              You are using a mobile device. If login fails, try desktop or update your browser.
-            </div>
-          )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="text-sm text-slate-600 block mb-1">Email</label>
