@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Print Styles */
+@media print {
+  /* Hide all buttons and navigation */
+  button,
+  nav,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Hide bottom navigation and controls */
+  .pb-28 {
+    padding-bottom: 0 !important;
+  }
+
+  /* Clean print layout */
+  * {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  /* Ensure invoice prints cleanly */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+  }
+
+  /* Table styling for print */
+  table {
+    width: 100% !important;
+  }
+
+  /* Prevent page breaks inside elements */
+  div {
+    page-break-inside: avoid;
+  }
+}

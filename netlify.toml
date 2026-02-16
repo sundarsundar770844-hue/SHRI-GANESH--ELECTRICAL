@@ -1,0 +1,19 @@
+# Netlify configuration for the monorepo
+# Builds the frontend located in `shri-ganesh-frontend` and publishes its `dist`
+[build]
+  base = "shri-ganesh-frontend"
+  command = "npm ci && npm run build"
+  publish = "dist"
+
+[context.production.environment]
+  # DO NOT commit real secrets here. Set real values in Netlify Site > Settings > Build & deploy > Environment.
+  # VITE_API_URL = "https://your-backend.example.com/api"
+  # VITE_GOOGLE_CLIENT_ID = "your-google-client-id.apps.googleusercontent.com"
+  # VITE_GOOGLE_API_KEY = "your-google-api-key"
+
+# Redirect all requests to index.html so client-side routing (React Router) works.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
