@@ -10,6 +10,7 @@ const allowDemo = import.meta.env.DEV;
 export default function Login({ onLogin }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState(location.state?.email || '');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -82,13 +83,17 @@ export default function Login({ onLogin }) {
   async function handleSubmit(e) {
     e.preventDefault();
     setError('');
+    if (!username.trim()) {
+      setError('Username is required');
+      return;
+    }
     setLoading(true);
     try {
-      const res = await (await import('../api')).default.post('/auth/login', { email, password });
+      const res = await (await import('../api')).default.post('/auth/login', { username, email, password });
       onLogin(res.data, res.data.token);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.error || 'Login failed');
+      setError(err.response?.data?.error || 'Login failed - username or credentials do not match');
     } finally {
       setLoading(false);
     }
@@ -100,6 +105,10 @@ export default function Login({ onLogin }) {
         <h1 className="text-2xl font-bold text-[#0D47A1] text-center mb-2">Shri Ganesh Electricals</h1>
         <div className="bg-white p-6 rounded-xl shadow space-y-4">
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="text-sm text-slate-600 block mb-1">Username</label>
+              <input type="text" value={username} onChange={e => setUsername(e.target.value)} required className="w-full p-3 rounded-lg border" placeholder="your username" />
+            </div>
             <div>
               <label className="text-sm text-slate-600 block mb-1">Email</label>
               <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="w-full p-3 rounded-lg border" placeholder="your@email.com" />

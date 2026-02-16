@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export default function Signup({ onLogin }) {
   const navigate = useNavigate();
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -22,8 +23,9 @@ export default function Signup({ onLogin }) {
 
     // client-side validation to avoid server 400s
     const trimmedEmail = email?.trim() || '';
-    if (!trimmedEmail || !password) {
-      setError('Email and password are required');
+    const trimmedUsername = username?.trim() || '';
+    if (!trimmedEmail || !trimmedUsername || !password) {
+      setError('Email, username, and password are required');
       return;
     }
     if (password.length < 6) {
@@ -34,7 +36,7 @@ export default function Signup({ onLogin }) {
     setLoading(true);
     try {
       const API = (await import('../api')).default;
-      const res = await API.post('/auth/signup', { email: trimmedEmail, password });
+      const res = await API.post('/auth/signup', { email: trimmedEmail, username: trimmedUsername, password });
 
       // Server returns token -> sign in immediately
       if (res.data?.token) {
@@ -45,7 +47,7 @@ export default function Signup({ onLogin }) {
 
       // Fallback: if signup succeeded but no token returned, try login endpoint
       try {
-        const loginRes = await API.post('/auth/login', { email: trimmedEmail, password });
+        const loginRes = await API.post('/auth/login', { username: trimmedUsername, password });
         if (loginRes.data?.token) {
           onLogin(loginRes.data, loginRes.data.token);
           navigate('/');
@@ -81,6 +83,10 @@ export default function Signup({ onLogin }) {
           </div>
         )}
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow space-y-4">
+          <div>
+            <label className="text-sm text-slate-600 block mb-1">Username</label>
+            <input type="text" value={username} onChange={e => setUsername(e.target.value)} required className="w-full p-3 rounded-lg border" placeholder="choose a username" />
+          </div>
           <div>
             <label className="text-sm text-slate-600 block mb-1">Email</label>
             <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="w-full p-3 rounded-lg border" placeholder="your@email.com" />
