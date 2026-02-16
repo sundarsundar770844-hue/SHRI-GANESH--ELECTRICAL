@@ -1,17 +1,5 @@
 {
   "version": 2,
-  "buildCommand": "npm install",
-  "functions": {
-    "api.js": {
-      "runtime": "nodejs18.x",
-      "maxDuration": 30
-    }
-  },
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/api.js"
-    }
-  ]
+  "buildCommand": "npm install"
 }
 

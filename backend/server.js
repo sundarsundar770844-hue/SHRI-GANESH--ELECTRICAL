@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import mongoose from 'mongoose';
-import app from './api.js';
+import app from './api/index.js';
 
 const connectDB = async () => {
 	try {
