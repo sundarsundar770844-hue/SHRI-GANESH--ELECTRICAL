@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "buildCommand": "npm install",
+  "runtime": "nodejs18.x",
+  "functions": {
+    "api.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/api.js"
+    }
+  ],
+  "env": {
+    "MONGO_URI": "@mongo_uri",
+    "JWT_SECRET": "@jwt_secret",
+    "GOOGLE_CLIENT_ID": "@google_client_id"
+  }
+}
+
