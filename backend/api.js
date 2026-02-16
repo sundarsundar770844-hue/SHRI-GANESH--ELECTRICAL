@@ -11,93 +11,53 @@ import resetRoutes from './routes/resetRoutes.js';
 
 const app = express();
 
-// Middleware - MUST BE FIRST
+// CORS & JSON middleware
 app.use(cors({ origin: '*' }));
 app.use(express.json());
 
-// MongoDB connection cache
-let mongoConnected = false;
+let dbConnected = false;
 
-const connectDB = async () => {
-  if (mongoConnected && mongoose.connection.readyState === 1) {
-    return;
-  }
-
+async function connectDB() {
+  if (dbConnected && mongoose.connection.readyState === 1) return;
+  
   try {
-    if (!process.env.MONGO_URI) {
-      throw new Error('MONGO_URI not set');
-    }
+    if (!process.env.MONGO_URI) throw new Error('MONGO_URI not set');
     
     await mongoose.connect(process.env.MONGO_URI, {
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
     });
     
-    mongoConnected = true;
+    dbConnected = true;
   } catch (err) {
-    console.error('MongoDB error:', err.message);
-    mongoConnected = false;
+    console.error('DB:', err.message);
+    dbConnected = false;
     throw err;
   }
-};
+}
 
-// Health check - NO DB REQUIRED
-app.get('/api/health', (req, res) => {
-  res.json({ ok: true });
-});
+// Health check (no DB needed)
+app.get('/api/health', (req, res) => res.json({ ok: true }));
+app.get('/', (req, res) => res.json({ message: 'API ok' }));
 
-// Root endpoint
-app.get('/', (req, res) => {
-  res.json({ message: 'API running' });
-});
-
-// DB Connection middleware - BEFORE ROUTES
-app.use('/api/auth', async (req, res, next) => {
+// Single middleware to connect DB for all /api routes
+app.use('/api/', async (req, res, next) => {
   try {
     await connectDB();
     next();
-  } catch (err) {
-    res.status(503).json({ error: 'DB error' });
+  } catch {
+    res.status(503).json({ error: 'DB unavailable' });
   }
 });
 
-app.use('/api/products', async (req, res, next) => {
-  try {
-    await connectDB();
-    next();
-  } catch (err) {
-    res.status(503).json({ error: 'DB error' });
-  }
-});
-
-app.use('/api/bills', async (req, res, next) => {
-  try {
-    await connectDB();
-    next();
-  } catch (err) {
-    res.status(503).json({ error: 'DB error' });
-  }
-});
-
-app.use('/api/reset', async (req, res, next) => {
-  try {
-    await connectDB();
-    next();
-  } catch (err) {
-    res.status(503).json({ error: 'DB error' });
-  }
-});
-
-// Mount routes AFTER middleware
+// Mount all routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/bills', billRoutes);
 app.use('/api/reset', resetRoutes);
 
 // 404
-app.use((req, res) => {
-  res.status(404).json({ error: 'Not found', path: req.path });
-});
+app.use((req, res) => res.status(404).json({ error: 'Not found' }));
 
 export default app;
 
