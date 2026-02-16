@@ -2,11 +2,21 @@
 
 Mobile-first Electrical Shop Management Web App.
 
+**GitHub:** https://github.com/sundarsundar770844-hue/SHRI-GANESH--ELECTRICAL
+
+## Quick Deployment Links
+
+- 📱 **Frontend Live:** https://netlify-site-url (Netlify - Coming Soon)
+- 🔌 **Backend API:** https://vercel-api-url (Vercel - Follow steps below)
+- 📖 **Frontend Setup:** [NETLIFY_SETUP.md](NETLIFY_SETUP.md)
+- 🖥️ **Backend Setup:** [BACKEND_DEPLOYMENT.md](BACKEND_DEPLOYMENT.md)
+
 ## Tech Stack
 
 - **Frontend:** React (Vite) + Tailwind CSS
 - **Backend:** Node.js + Express
 - **Database:** MongoDB Atlas (Mongoose)
+- **Deployment:** Netlify (Frontend) + Vercel (Backend)
 
 ## Setup
 
